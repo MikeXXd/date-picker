@@ -5,6 +5,14 @@ body {
   justify-content: center;
 }
 
+h2 {
+  margin: 0;
+}
+
+p {
+  margin: 0.5rem
+}
+
 .date-picker-container {
   position: relative;
   display: inline-block;
@@ -43,6 +51,16 @@ body {
   text-decoration: none;
 }
 
+.setting li {
+  display: flex;
+  justify-content: space-between;
+}
+
+.toggle-week-start-button {
+  cursor: pointer;
+  font-size: smaller;
+
+}
 .date-picker-button {
   cursor: pointer;
 }

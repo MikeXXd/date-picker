@@ -15,7 +15,8 @@ import { About } from "./About";
 
 export function DatePicker({ value, onChange }) {
   const [isOpen, setIsOpen] = useState(false);
-
+  const [weekStartsOnSunday, setWeekStartsOnSunday] = useState(false);
+  
   return (
     <div className="date-picker-container">
       <button
@@ -25,20 +26,23 @@ export function DatePicker({ value, onChange }) {
         {value == null ? "Pick a date" : format(value, "MMM do, yyyy")}
       </button>
       {isOpen ? (
-        <DataPickerBody value={value} onChange={onChange} />
+        <DataPickerBody value={value} onChange={onChange} weekStartsOnSunday={weekStartsOnSunday} />
       ) : (
-        <About />
+        <About
+          setWeekStartsOnSunday={setWeekStartsOnSunday}
+          weekStartsOnSunday={weekStartsOnSunday}
+        />
       )}
     </div>
   );
 }
 
-function DataPickerBody({ value, onChange }) {
+function DataPickerBody({ value, onChange, weekStartsOnSunday }) {
   const [visibleMonth, setVisibleMonth] = useState(value || new Date());
-
+  const weekStartsOn = { weekStartsOn: weekStartsOnSunday? 0 : 1 };
   const visibleDates = eachDayOfInterval({
-    start: startOfWeek(startOfMonth(visibleMonth)),
-    end: endOfWeek(endOfMonth(visibleMonth)),
+    start: startOfWeek(startOfMonth(visibleMonth), weekStartsOn),
+    end: endOfWeek(endOfMonth(visibleMonth), weekStartsOn),
   });
 
   useEffect(() => {
@@ -74,7 +78,7 @@ function DataPickerBody({ value, onChange }) {
       <div className="date-picker-header">
         <button
           onClick={() => moveMonthsBy(-1)}
-          className="prev-month-button month-button"
+          className="month-button"
         >
           &larr;
         </button>
@@ -83,19 +87,20 @@ function DataPickerBody({ value, onChange }) {
         </div>
         <button
           onClick={() => moveMonthsBy(1)}
-          className="next-month-button month-button"
+          className="month-button"
         >
           &rarr;
         </button>
       </div>
       <div className="date-picker-grid-header date-picker-grid">
-        <div>Sun</div>
+        {weekStartsOnSunday? <div>Sun</div> : false}
         <div>Mon</div>
         <div>Tue</div>
         <div>Wed</div>
         <div>Thu</div>
         <div>Fri</div>
         <div>Sat</div>
+        {weekStartsOnSunday? false : <div>Sun</div> }
       </div>
       <div className="date-picker-grid-dates date-picker-grid">
         {visibleDates.map((date) => (
