@@ -24,7 +24,11 @@ export function DatePicker({ value, onChange }) {
       >
         {value == null ? "Pick a date" : format(value, "MMM do, yyyy")}
       </button>
-      {isOpen? <DataPickerBody value={value} onChange={onChange}/> : <About /> }
+      {isOpen ? (
+        <DataPickerBody value={value} onChange={onChange} />
+      ) : (
+        <About />
+      )}
     </div>
   );
 }
@@ -41,16 +45,19 @@ function DataPickerBody({ value, onChange }) {
     const keyAction = (e) => {
       console.log(e);
 
-      if (!e.ctrlKey && e.key === "ArrowLeft") {moveMonthsBy(-1)}
-      else if (!e.ctrlKey && e.key === "ArrowRight") {moveMonthsBy(1)}
-      else if (e.key === "Escape") 
-      {onChange(new Date()); setVisibleMonth(new Date())}
-      else if (e.ctrlKey && e.key === 'ArrowLeft') {moveMonthsBy(-12)}
-      else if (e.ctrlKey && e.key === 'ArrowRight') {moveMonthsBy(12)}
-
-      else return}
-    ;
-
+      if (!e.ctrlKey && e.key === "ArrowLeft") {
+        moveMonthsBy(-1);
+      } else if (!e.ctrlKey && e.key === "ArrowRight") {
+        moveMonthsBy(1);
+      } else if (e.key === "Escape") {
+        onChange(new Date());
+        setVisibleMonth(new Date());
+      } else if (e.ctrlKey && e.key === "ArrowLeft") {
+        moveMonthsBy(-12);
+      } else if (e.ctrlKey && e.key === "ArrowRight") {
+        moveMonthsBy(12);
+      } else return;
+    };
     document.addEventListener("keydown", keyAction);
 
     return () => document.removeEventListener("keydown", keyAction);
@@ -58,8 +65,8 @@ function DataPickerBody({ value, onChange }) {
 
   function moveMonthsBy(months) {
     setVisibleMonth((currentMonth) => {
-      return addMonths(currentMonth, months)
-    })
+      return addMonths(currentMonth, months);
+    });
   }
 
   return (
