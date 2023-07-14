@@ -1,3 +1,5 @@
+import img from "./images/linkedin_icon.png";
+
 export function About({ weekStartsOnSunday, setWeekStartsOnSunday }) {
   return (
     <div className="about date-picker">
@@ -13,7 +15,10 @@ export function About({ weekStartsOnSunday, setWeekStartsOnSunday }) {
         <h2>Setting:</h2>{" "}
         <ul>
           <li>
-            <span>the week will start with {weekStartsOnSunday ? "Sunday" : "Monday"}</span>
+            <span>
+              the week will start with{" "}
+              {weekStartsOnSunday ? "Sunday" : "Monday"}
+            </span>
             <button
               onClick={() => setWeekStartsOnSunday((current) => !current)}
               className="toggle-week-start-button"
@@ -43,6 +48,9 @@ export function About({ weekStartsOnSunday, setWeekStartsOnSunday }) {
         created by{" "}
         <a href="http://www.mikexd.cz/">
           <em>MikeXd.cz</em>
+        </a>{" "}
+        <a href="https://www.linkedin.com/in/michal-vili%C5%A1-483196251/">
+          <img src={img} alt="linkedin icon" />
         </a>
       </footer>
     </div>
